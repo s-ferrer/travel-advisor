@@ -5,12 +5,12 @@ import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import Rating from "@material-ui/lab/Rating";
 
 import mapStyles from "../../mapStyles";
-import useStyles from "./styles.js";
+import useStyles from "./styles";
 
 const Map = ({
-  coords,
+  coordinates,
   places,
-  setCoords,
+  setCoordinates,
   setBounds,
   setChildClicked,
   weatherData,
@@ -22,8 +22,8 @@ const Map = ({
     <div className={classes.mapContainer}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_MAP_KEY }}
-        defaultCenter={coords}
-        center={coords}
+        defaultCenter={coordinates}
+        center={coordinates}
         defaultZoom={14}
         margin={[50, 50, 50, 50]}
         options={{
@@ -32,7 +32,7 @@ const Map = ({
           styles: mapStyles,
         }}
         onChange={(e) => {
-          setCoords({ lat: e.center.lat, lng: e.center.lng });
+          setCoordinates({ lat: e.center.lat, lng: e.center.lng });
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
         }}
         onChildClick={(child) => setChildClicked(child)}
@@ -54,7 +54,6 @@ const Map = ({
                     variant="subtitle2"
                     gutterBottom
                   >
-                    {" "}
                     {place.name}
                   </Typography>
                   <img
