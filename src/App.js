@@ -10,7 +10,7 @@ const App = () => {
   const [type, setType] = useState("restaurants");
   const [rating, setRating] = useState("");
 
-  const [coordinates, setCoordinates] = useState({});
+  const [coords, setCoords] = useState({});
   const [bounds, setBounds] = useState(null);
 
   const [weatherData, setWeatherData] = useState([]);
@@ -24,10 +24,11 @@ const App = () => {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       ({ coords: { latitude, longitude } }) => {
-        setCoordinates({ lat: latitude, lng: longitude });
+        setCoords({ lat: latitude, lng: longitude });
       }
     );
   }, []);
+
   useEffect(() => {
     const filtered = places.filter((place) => Number(place.rating) > rating);
 
@@ -38,7 +39,7 @@ const App = () => {
     if (bounds) {
       setIsLoading(true);
 
-      getWeatherData(coordinates.lat, coordinates.lng).then((data) =>
+      getWeatherData(coords.lat, coords.lng).then((data) =>
         setWeatherData(data)
       );
 
@@ -49,7 +50,7 @@ const App = () => {
         setIsLoading(false);
       });
     }
-  }, [bounds, type, coordinates.lat, coordinates.lng]);
+  }, [bounds, type, coords.lat, coords.lng]);
 
   const onLoad = (autoC) => setAutocomplete(autoC);
 
@@ -57,7 +58,7 @@ const App = () => {
     const lat = autocomplete.getPlace().geometry.location.lat();
     const lng = autocomplete.getPlace().geometry.location.lng();
 
-    setCoordinates({ lat, lng });
+    setCoords({ lat, lng });
   };
 
   return (
@@ -89,9 +90,9 @@ const App = () => {
           <ErrorBoundary>
             <Map
               setChildClicked={setChildClicked}
-              setCoodinates={setCoordinates}
+              setCoords={setCoords}
               setBounds={setBounds}
-              coordinates={coordinates}
+              coords={coords}
               places={filteredPlaces.length ? filteredPlaces : places}
               weatherData={weatherData}
             />
