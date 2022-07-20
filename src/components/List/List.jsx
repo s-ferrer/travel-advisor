@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, createRef } from "react";
 import {
   CircularProgress,
   Grid,
@@ -10,10 +10,7 @@ import {
 } from "@material-ui/core";
 
 import PlaceDetails from "../PlaceDetails/PlaceDetails";
-import useStyles from "./styles.js";
-import { useState } from "react";
-import { useEffect } from "react";
-import { createRef } from "react";
+import useStyles from "./styles";
 
 const List = ({
   places,
@@ -29,7 +26,7 @@ const List = ({
 
   useEffect(() => {
     setElRefs((refs) =>
-      Array(places.length)
+      Array(places?.length)
         .fill()
         .map((_, i) => refs[i] || createRef())
     );
@@ -71,7 +68,7 @@ const List = ({
           </FormControl>
           <Grid container spacing={3} className={classes.list}>
             {places?.map((place, i) => (
-              <Grid ref={elRefs[i]} key={i} item xs={12}>
+              <Grid key={i} item xs={12}>
                 <PlaceDetails
                   selected={Number(childClicked) === i}
                   refProp={elRefs[i]}

@@ -8,9 +8,9 @@ import mapStyles from "../../mapStyles";
 import useStyles from "./styles";
 
 const Map = ({
-  coordinates,
+  coords,
   places,
-  setCoordinates,
+  setCoords,
   setBounds,
   setChildClicked,
   weatherData,
@@ -22,8 +22,8 @@ const Map = ({
     <div className={classes.mapContainer}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: process.env.REACT_APP_MAP_KEY }}
-        defaultCenter={coordinates}
-        center={coordinates}
+        defaultCenter={coords}
+        center={coords}
         defaultZoom={14}
         margin={[50, 50, 50, 50]}
         options={{
@@ -32,7 +32,7 @@ const Map = ({
           styles: mapStyles,
         }}
         onChange={(e) => {
-          setCoordinates({ lat: e.center.lat, lng: e.center.lng });
+          setCoords({ lat: e.center.lat, lng: e.center.lng });
           setBounds({ ne: e.marginBounds.ne, sw: e.marginBounds.sw });
         }}
         onChildClick={(child) => setChildClicked(child)}
@@ -63,7 +63,7 @@ const Map = ({
                         ? place.photo.images.large.url
                         : "https://www.foodserviceandhospitality.com/wp-content/uploads/2016/09/Restaurant-Placeholder-001.jpg"
                     }
-                    alt=""
+                    alt={place.name}
                   />
                   <Rating
                     name="read-only"
